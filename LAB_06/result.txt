@@ -1,0 +1,5 @@
+Adding data
+Data: {"name": "Stefan", "surname": "Wichura", "age": 31, "isStudent":TRUE, "Height": 175}
+Editing isStudent field: {"name": "Stefan", "surname": "Wichura", "age": 31, "isStudent":FALSE, "Height": 175}
+Erasing data
+Loading deleted key: None
