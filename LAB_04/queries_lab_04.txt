@@ -1,0 +1,85 @@
+//zadanie 1 - Znajdź trasy którymi można dostać się z Darjeeling na Sandakphu, mające najmniejszą ilość etapów 
+
+MATCH path = allShortestPaths(({name: "Darjeeling"}) -[*]-> ({name: "Sandakphu"})) 
+RETURN path;
+
+//zadanie 2 - Znajdź mające najmniej etapów trasy którymi można dostać się z Darjeeling na Sandakphu i które mogą być wykorzystywane zimą 
+
+
+MATCH path = allShortestPaths(({name: "Darjeeling"}) -[*]-> ({name: "Sandakphu"})) 
+  WHERE all (r in relationships(path) WHERE r.winter = "true")  
+  RETURN path;
+
+//zadanie 3 - Uszereguj trasy którymi można dostać się z Darjeeling na Sandakphu według dystansu 
+
+MATCH path = ({name: "Darjeeling"}) -[r*]-> ({name: "Sandakphu"}) 
+RETURN path, reduce(dist = 0 ,r in r|dist + r.distance) as total_distance  order by total_distance;
+
+//zadanie 4 - Uszereguj porty lotnicze według ilości rozpoczynających się w nich lotów
+
+MATCH (:Flight)-[:ORIGIN]->(airport:Airport) 
+RETURN airport, count(*) as flights_count order by flights_count desc;
+
+//zadanie 5 - Znajdź wszystkie porty lotnicze, do których da się dolecieć (bezpośrednio lub z przesiadkami) z Los Angeles (LAX) wydając mniej niż 3000
+
+MATCH (arr)<-[:ORIGIN]-(t)-[:DESTINATION]->(dest:Airport)
+MATCH (t) <-- (t:Ticket) 
+with arr, dest, max(t.price) as lowestPrice, id(t) as flightId
+merge (arr)-[:FLIGHT{price:lowestPrice, flight_id: flightId}]->(dest);
+
+MATCH path=(LAX: Airport{name:"LAX"})-[:FLIGHT*..3]->(dest: Airport)
+WITH reduce(total=0, t in relationships(path) | total +t.price) as total_price, path
+WHERE total_price < 3000
+RETURN distinct(last(nodes(path))), total_price order by total_price
+
+//zadanie 6 - Uszereguj połączenia, którymi można dotrzeć z Los Angeles (LAX) do Dayton (DAY) według ceny biletów 
+
+MATCH path=(LAX: Airport{name:"LAX"})-[:FLIGHT*..3]->(DAY: Airport{name: "DAY"})
+WITH reduce(total=0, t in relationships(path) | total +t.price) as total_price, path 
+RETURN path order by total_price;
+
+
+NO RECORDS WERE FOUND
+
+//zadanie 7 - Znajdź najtańsze połączenie z Los Angeles (LAX) do Dayton (DAY) 
+
+MATCH path=(LAX: Airport{name:"LAX"})-[:FLIGHT*]->(DAY: Airport{name: "DAY"})
+WITH reduce(total=0, t in relationships(path) | total +t.price) as total_price, path
+RETURN path order by total_price limit 1;
+
+
+NO RECORDS WERE FOUND
+
+
+//zadanie 8 - Znajdź najtańsze połączenie z Los Angeles (LAX) do Dayton (DAY) w klasie biznes 
+
+
+MATCH (LAX)<-[:ORIGIN]-(c)-[:DESTINATION]->(destx:Airport)
+MATCH (c) <-- (t:Ticket{class:"business"}) 
+merge (LAX)-[fl:BUSINESS_FLIGHT{price:t.price, flight_id: id(c)}]->(dest);
+
+MATCH path=(la: Airport{name:"LAX"})-[r:BUSINESS_FLIGHT*..4]->(DAY: Airport{name: "DAY"})
+WITH reduce(total=0, c in relationships(path) | total +c.price) as total_price, path 
+RETURN path order by total_price limit 1;
+
+
+NO RECORDS WERE FOUND
+
+//zadanie 9 - Uszereguj linie lotnicze według ilości miast, pomiędzy którymi oferują połączenia (unikalnych miast biorących udział w relacjach :ORIGIN i :DESTINATION węzłów typu Flight obsługiwanych przez daną linię) 
+
+MATCH (f:Flight)-[:DESTINATION|ORIGIN]->(a:Airport)
+RETURN f.airline,a, count(distinct(a)) order by count(distinct(a)) desc;
+
+//zadanie 10 - Znajdź najtańszą trasę łączącą 3 różne porty lotnicze
+
+MATCH path=(ARR: Airport)-[:FLIGHT*..4]->(DEST: Airport)
+WITH size(reduce(dist=[], n in nodes(path) | case when not n in dist then dist + n end)) as count, path
+WHERE count = 3
+WITH reduce(total=0, t in relationships(path) | total +t.price) as total_price, path
+RETURN path, min(total_price) order by min(total_price) limit 1;
+
+
+
+
+
+
