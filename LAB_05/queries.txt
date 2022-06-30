@@ -1,0 +1,37 @@
+Zadanie 1:
+curl -i -XPUT -H "Content-Type: application/json" -d '{"name": "Stefan", "surname": "Wichura", "age": 31, "isStudent":TRUE, "Height": 175}' http://172.18.0.2:8098/buckets/s23911/keys/stefan
+curl -i -XPUT -H "Content-Type: application/json" -d '{"name": "Ziutek", "surname": "Nowicki", "age": 28, "isStudent":FALSE, "Height": 183}' http://172.18.0.2:8098/buckets/s23911/keys/ziutek
+curl -i -XPUT -H "Content-Type: application/json" -d '{"name": "Andrzej", "surname": "Komorowski", "age": 30, "isStudent":FALSE, "Height": 169}' http://172.18.0.2:8098/buckets/s23391/keys/andrzej
+curl -i -XPUT -H "Content-Type: application/json" -d '{"name": "Kinga", "surname": "Biedron", "age": 25, "isStudent":TRUE, "Height": 156}' http://172.18.0.2:8098/buckets/s23911/keys/kinga 
+curl -i -XPUT -H "Content-Type: application/json" -d '{"name": "Kasia", "surname": "Ptasinska", "age": 27, "isStudent":TRUE, "Height": 190}' http://172.18.0.2:8098/buckets/s23911/keys/kasia
+
+Zadanie 2:
+curl -i -XGET  http://172.18.0.2:8098/buckets/s23911/keys/stefan
+
+Zadanie 3: 
+curl -i -XPUT -H "Content-Type: application/json" -d '{"name": "Ziutek", "surname": "Nowicki", "age": 28, "isStudent":FALSE, "Height": 183, "Weight":75}' http://172.18.0.2:8098/buckets/s23911/keys/ziutek
+
+Zadanie 4:
+curl -i -XPUT -H "Content-Type: application/json" -d '{"name": "Andrzej", "surname": "Komorowski", "age": 30, "isStudent":FALSE}' http://172.18.0.2:8098/buckets/s23911/keys/andrzej
+
+Zadanie 5:
+curl -i -XPUT -H "Content-Type: application/json" -d '{"name": "Kinga", "surname": "Biedron", "age": 25, "isStudent":FALSE, "Height": 156}' http://172.18.0.2:8098/buckets/s23911/keys/kinga 
+
+Zadanie 6:
+curl -i -XDELETE http://172.18.0.2:8098/buckets/s23911/keys/kasia
+
+Zadanie 7:
+curl -i -XGET  http://172.18.0.2:8098/buckets/s23911/keys/kasia
+
+Zadanie 8: 
+curl -i -XPOST -d '{"tescik":"tescik"}' -H "Content-Type: application/json" http://127.0.0.1:8098/buckets/s23911/keys
+
+Zadanie 9:
+
+curl -i -XGET http://127.0.0.1:8098/buckets/s23911/keys/9bIkh7OcnF44lHDcqiFx7ui6lHQ
+
+Zadanie 10:
+curl -i -XDELETE http://127.0.0.1:8098/buckets/s23911/keys/9bIkh7OcnF44lHDcqiFx7ui6lHQ
+
+
+

@@ -1,0 +1,12 @@
+HTTP/1.1 200 OK
+X-Riak-Vclock: a85hYGBgzGDKBVI8i00Wz+3TvbwOIpTImMfKELTI+xZfFgA=
+Vary: Accept-Encoding
+Server: MochiWeb/1.1 WebMachine/1.10.9 (cafe not found)
+Link: </buckets/s23911>; rel="up"
+Last-Modified: Thu, 01 Jul 2021 18:52:44 GMT
+ETag: "5WzwyB1PXhiEByWHZZDh7D"
+Date: Thu, 01 Jul 2021 18:54:00 GMT
+Content-Type: application/json
+Content-Length: 84
+
+{"name": "Stefan", "surname": "Wichura", "age": 31, "isStudent":TRUE, "Height": 175}
