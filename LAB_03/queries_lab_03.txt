@@ -1,0 +1,34 @@
+// zadanie 1
+
+MATCH (movies:Movie) RETURN movies
+
+// zadanie 2
+
+MATCH (:Person {name: "Hugo Weaving"}) - [:ACTED_IN ] -> (movie:Movie) RETURN movie
+
+// zadanie 3
+
+MATCH (:Person{name: "Hugo Weaving"}) -[:ACTED_IN]-> (m: Movie) <-[:DIRECTED]- (d: Person) RETURN d
+
+// zadanie 4
+
+MATCH (:Person{name: "Hugo Weaving"}) -[:ACTED_IN]-> (m: Movie) <-[:ACTED_IN]- (actor: Person) RETURN actor
+
+// zadanie 5
+
+MATCH (m:Movie) <- [:ACTED_IN]-(a) where (a)-[:ACTED_IN]->(:Movie {title:"The Matrix"}) RETURN m, a
+
+// zadanie 6
+
+MATCH (actor:Person)-[:ACTED_IN]->(actorMovies) WITH actor, count(actorMovies) as movies_count WHERE movies_count > 0 RETURN actor, movies_count
+
+// zadanie 7
+
+MATCH (people:Person)-[:WROTE]->(movie) WHERE (people)-[:DIRECTED]->(movie) RETURN people, movie
+
+// zadanie 8 
+
+MATCH (Keanu:Person {name: "Keanu Reeves"}) - [:ACTED_IN] -> (m:Movie) <-[:ACTED_IN]- (Hugo:Person {name:"Hugo Weaving"}) RETURN m, Hugo, Keanu
+
+
+
